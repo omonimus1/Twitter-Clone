@@ -23,8 +23,8 @@ class Signup(FlaskForm):
             raise ValidationError('Account with this email ID already exists')
 
 class Login(FlaskForm):
-    username = StringField('Username',validators=[DataRequired(), Length(min=4)]])
-    password = PasswordField('Password',validators=[DataRequired(),Email()])
+    username = StringField('Username',validators=[DataRequired(), Length(min=4)])
+    password = PasswordField('Password',validators=[DataRequired(),])
     remember =  BooleanField('Remember me')
     login = SubmitField('Login')
 
