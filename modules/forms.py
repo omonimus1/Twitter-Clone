@@ -3,7 +3,7 @@ from flask_wtf.file import FileField, FileAllowed
 from flask_login import current_user
 from wtforms import StringField, SubmitField, PasswordField, BooleanField, TextAreaField
 from wtforms.fields.html5 import DateField
-from wtforms.validators import DataRequired, Email, Length, ValidationError
+from wtforms.validators import DataRequired, Email, Length, ValidationError, Optional
 from modules.modals import User_mgmt
 
 class Signup(FlaskForm):
@@ -36,10 +36,10 @@ class createTweet(FlaskForm):
 class UpdateProfile(FlaskForm):
     username = StringField('Username',validators=[Length(min=4)])
     email = StringField('Email',validators=[Email()])
-    bio = StringField('Tell us a bit about yourself',validators=[Length(max=100)])
+    bio = StringField('Tell us a bit about yourself',validators=[Length(max=100),Optional()])
     profile = FileField('Update Profile Picture',validators=[FileAllowed(['jpg','png'])])
     profile_bg = FileField('Upload background image',validators=[FileAllowed(['jpg','png'])])
-    bday = DateField('Add your birthday')
+    bday = DateField('Add your birthday', validators=(Optional(),))
     save = SubmitField('Save Changes')
 
     def validate_username(self,username):
