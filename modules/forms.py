@@ -9,7 +9,7 @@ from modules.modals import User_mgmt
 class Signup(FlaskForm):
     username = StringField('Username',validators=[DataRequired(),Length(min=4)])
     email = StringField('Email',validators=[DataRequired(),Email()])
-    password = PasswordField('Password',validators=[DataRequired(),Length(min=6)])
+    password = PasswordField('Password',validators=[DataRequired(),Length(min=4)])
     signup = SubmitField('Sign up')
 
     def validate_username(self,username):
@@ -23,8 +23,8 @@ class Signup(FlaskForm):
             raise ValidationError('Account with this email ID already exists')
 
 class Login(FlaskForm):
-    username = StringField('Username',validators=[DataRequired()])
-    password = PasswordField('Password',validators=[DataRequired()])
+    username = StringField('Username',validators=[DataRequired(), Length(min=4)]])
+    password = PasswordField('Password',validators=[DataRequired(),Email()])
     remember =  BooleanField('Remember me')
     login = SubmitField('Login')
 

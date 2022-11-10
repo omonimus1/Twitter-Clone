@@ -29,7 +29,7 @@
             <form action="{{ url_for('home') }}" class="form-group" style="margin-left: 150px;" method="post">
                 {{form1.csrf_token}}
                 {{form1.username(class='form_control',placeholder='Username')}}
-                {{form1.email(class='form_control',placeholder='Email')}}
+                {{form1.email(class='form_control',placeholder='Email', type='email')}}
                 {{form1.password(class='form_control',placeholder='Password')}} <br>
                 {{form1.signup(class='form_signup')}}
             </form>
