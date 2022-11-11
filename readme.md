@@ -15,6 +15,12 @@ Made using the python framework Flask, this is a frontend + backend clone of twi
 3. Install dependencies ```pip3 install -r requirements.txt```
 4. Run application ```python3 run.py```
 
+
+### Test coding quality
+* Lint: ```pylint $(git ls-files '*.py')```
+* Sort all imports ```isort .``` after have installed isort via ```pip3 install isort```
+```
+
 ## Screenshots
 
 Have tried to keep the UI as similiar as that of Twitter. Is not mobile responsive yet so is better to view it in landscape on laptop or desktop. The reason this hasn't been done yet is that this project's primary purpose was not to create a fronend site but rather create a fully functional generic social media website

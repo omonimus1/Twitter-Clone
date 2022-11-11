@@ -1,10 +1,14 @@
-from flask_wtf import FlaskForm
-from flask_wtf.file import FileField, FileAllowed
 from flask_login import current_user
-from wtforms import StringField, SubmitField, PasswordField, BooleanField, TextAreaField
+from flask_wtf import FlaskForm
+from flask_wtf.file import FileAllowed, FileField
+from wtforms import (BooleanField, PasswordField, StringField, SubmitField,
+                     TextAreaField)
 from wtforms.fields.html5 import DateField
-from wtforms.validators import DataRequired, Email, Length, ValidationError, Optional
+from wtforms.validators import (DataRequired, Email, Length, Optional,
+                                ValidationError)
+
 from modules.modals import User_mgmt
+
 
 class Signup(FlaskForm):
     username = StringField('Username',validators=[DataRequired(),Length(min=4)])

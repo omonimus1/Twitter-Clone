@@ -1,10 +1,12 @@
-from modules import app
-import secrets
 import os
+import secrets
+
+from modules import app
+
 
 def save_profile_picture(form_pic):
     random_hex = secrets.token_hex(8)
-    f_name,f_ext = os.path.splitext(form_pic.filename)
+    f_ext = os.path.splitext(form_pic.filename)
     picture_fn = random_hex + f_ext
     picture_path = os.path.join(app.root_path, 'static/Images/Users/profile_pics', picture_fn)
     form_pic.save(picture_path)
@@ -12,7 +14,7 @@ def save_profile_picture(form_pic):
 
 def save_bg_picture(form_pic):
     random_hex = secrets.token_hex(8)
-    f_name,f_ext = os.path.splitext(form_pic.filename)
+    f_ext = os.path.splitext(form_pic.filename)
     picture_fn = random_hex + f_ext
     picture_path = os.path.join(app.root_path, 'static/Images/Users/bg_pics', picture_fn)
     form_pic.save(picture_path)
@@ -34,7 +36,7 @@ def delete_old_images(image, bg_image):
 
 def save_tweet_picture(form_pic):
     random_hex = secrets.token_hex(8)
-    f_name,f_ext = os.path.splitext(form_pic.filename)
+    f_ext = os.path.splitext(form_pic.filename)
     picture_fn = random_hex + f_ext
     picture_path = os.path.join(app.root_path, 'static/Images/Tweets', picture_fn)
     form_pic.save(picture_path)

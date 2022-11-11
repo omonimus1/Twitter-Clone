@@ -1,20 +1,15 @@
-from flask import Flask,render_template, redirect, url_for, flash, request, abort
-from werkzeug.security import generate_password_hash,check_password_hash
-from flask_login import login_user, logout_user, current_user, login_required
-from sqlalchemy import desc
-
-from modules import app,db
-from modules.modals import User_mgmt, Post, Retweet, Timeline, Bookmark
-from modules.forms import Signup, Login, UpdateProfile, createTweet
-from modules.functions import save_bg_picture, save_profile_picture, delete_old_images, save_tweet_picture
-
 import datetime
 
+from flask import abort, flash, redirect, render_template, request, url_for
+from flask_login import current_user, login_required, login_user, logout_user
+from werkzeug.security import check_password_hash, generate_password_hash
 
-
-
-
-
+# from sqlalchemy import desc
+from modules import app, db
+from modules.forms import Login, Signup, UpdateProfile, createTweet
+from modules.functions import (delete_old_images, save_bg_picture,
+                               save_profile_picture, save_tweet_picture)
+from modules.modals import Bookmark, Post, Retweet, Timeline, User_mgmt
 
 #===================================================================================================================
 #===================================================================================================================
@@ -35,8 +30,8 @@ def home():
     if form_sign.validate_on_submit():
 
         hashed_password = generate_password_hash(form_sign.password.data, method='sha256')
-        x = datetime.datetime.now()
-        creation = str(x.strftime("%B")) +" "+ str(x.strftime("%Y")) 
+        current_date = datetime.datetime.now()
+        creation = str(current_date.strftime("%B")) +" "+ str(current_date.strftime("%Y")) 
         new_user = User_mgmt(username=form_sign.username.data, email=form_sign.email.data, password=hashed_password, date=creation)
         db.session.add(new_user)
         db.session.commit()
@@ -48,10 +43,8 @@ def home():
             if check_password_hash(user_info.password, form_login.password.data):
                 login_user(user_info, remember=form_login.remember.data)
                 return redirect(url_for('dashboard'))
-            else:
-                return render_template('errorP.html')
-        else:
-            return render_template('errorU.html')
+            return render_template('errorP.html')
+        return render_template('errorU.html')
 
     return render_template('start.html',form1=form_sign,form2=form_login)
 
@@ -98,37 +91,35 @@ def account():
 @app.route('/UpdateInfo',methods=['GET','POST'])
 @login_required
 def updateInfo():
+    if request.method == 'POST':
+        update = UpdateProfile()
+        if update.validate_on_submit():
+            old_img = ''
+            old_bg_img = ''
 
-    update = UpdateProfile()
-    if update.validate_on_submit():
-        old_img = ''
-        old_bg_img = ''
+            if update.profile.data:
+                profile_img = save_profile_picture(update.profile.data)
+                old_img = current_user.image_file
+                current_user.image_file = profile_img
 
-        if update.profile.data:
-            profile_img = save_profile_picture(update.profile.data)
-            old_img = current_user.image_file
-            current_user.image_file = profile_img
+            if update.profile_bg.data:
+                profile_bg_img = save_bg_picture(update.profile_bg.data)
+                old_bg_img = current_user.bg_file
+                current_user.bg_file = profile_bg_img
 
-        if update.profile_bg.data:
-            profile_bg_img = save_bg_picture(update.profile_bg.data)
-            old_bg_img = current_user.bg_file
-            current_user.bg_file = profile_bg_img
+            if update.bday.data:
+                current_user.bday = update.bday.data
 
-        if update.bday.data:
-            current_user.bday = update.bday.data
+            current_user.username = update.username.data
+            current_user.email = update.email.data
+            current_user.bio = update.bio.data
+            db.session.commit()
 
-        current_user.username = update.username.data
-        current_user.email = update.email.data
-        current_user.bio = update.bio.data
-        db.session.commit()
+            delete_old_images(old_img, old_bg_img)
 
-        delete_old_images(old_img, old_bg_img)
-
-        flash('Your account has been updated!','success')
-        return redirect(url_for('account'))
-
+            flash('Your account has been updated!','success')
+            return redirect(url_for('account'))
     elif request.method == 'GET':
-
         update.username.data = current_user.username
         update.email.data = current_user.email
         update.bio.data = current_user.bio
@@ -184,14 +175,14 @@ def dashboard():
     user_tweet = createTweet()
     if user_tweet.validate_on_submit():
 
-        x = datetime.datetime.now()
-        currentTime = str(x.strftime("%d")) +" "+ str(x.strftime("%B")) +"'"+ str(x.strftime("%y")) + " "+ str(x.strftime("%I")) +":"+ str(x.strftime("%M")) +" "+ str(x.strftime("%p"))
+        current_date = datetime.datetime.now()
+        current_time = str(current_date.strftime("%d")) +" "+ str(current_date.strftime("%B")) +"'"+ str(current_date.strftime("%y")) + " "+ str(current_date.strftime("%I")) +":"+ str(current_date.strftime("%M")) +" "+ str(current_date.strftime("%p"))
 
         if user_tweet.tweet_img.data:
             tweet_img = save_tweet_picture(user_tweet.tweet_img.data)
-            post = Post(tweet=user_tweet.tweet.data, stamp=currentTime, author=current_user, post_img=tweet_img)
+            post = Post(tweet=user_tweet.tweet.data, stamp=current_time, author=current_user, post_img=tweet_img)
         else:
-            post = Post(tweet=user_tweet.tweet.data, stamp=currentTime, author=current_user)
+            post = Post(tweet=user_tweet.tweet.data, stamp=current_time, author=current_user)
 
         db.session.add(post)
         db.session.commit()
@@ -288,10 +279,10 @@ def retweet(post_id):
 
     if new_tweet.validate_on_submit():
 
-        x = datetime.datetime.now()
-        currentTime = str(x.strftime("%d")) +" "+ str(x.strftime("%B")) +"'"+ str(x.strftime("%y")) + " "+ str(x.strftime("%I")) +":"+ str(x.strftime("%M")) +" "+ str(x.strftime("%p"))
+        current_date = datetime.datetime.now()
+        current_time = str(current_date.strftime("%d")) +" "+ str(current_date.strftime("%B")) +"'"+ str(current_date.strftime("%y")) + " "+ str(current_date.strftime("%I")) +":"+ str(current_date.strftime("%M")) +" "+ str(current_date.strftime("%p"))
 
-        retweet = Retweet(tweet_id=post.id,user_id=current_user.id,retweet_stamp=currentTime,retweet_text=new_tweet.tweet.data)
+        retweet = Retweet(tweet_id=post.id,user_id=current_user.id,retweet_stamp=current_time,retweet_text=new_tweet.tweet.data)
         db.session.add(retweet)
         db.session.commit()
 
@@ -330,7 +321,7 @@ def delete_retweet(post_id):
 def delete_tweet(post_id):
 
     post_bk = Bookmark.query.filter_by(post_id=post_id)
-    if post_bk != None:
+    if post_bk is not None:
         for i in post_bk:
             db.session.delete(i)
             db.session.commit()
@@ -355,7 +346,7 @@ def delete_tweet(post_id):
 def delete_retweeted_tweet(post_id):
 
     post_bk = Bookmark.query.filter_by(post_id=post_id)
-    if post_bk != None:
+    if post_bk is not None:
         for i in post_bk:
             db.session.delete(i)
             db.session.commit()
