@@ -5,22 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Twitter</title>
     <link rel="stylesheet" href="{{ url_for('static',filename='css/start.css') }}">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/css/bootstrap.min.css" integrity="sha384-VCmXjywReHh4PwowAiWNagnWcLhlEJLA5buUprzK8rxFgeH0kww/aWY76TfkUoSX" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <link rel="shortcut icon" href="https://img.icons8.com/fluent/48/000000/twitter.png"/>
 </head>
 <body>
-    <div class="image-bg">
-        <div class="about">
-            <ul>
-                <li><img class="icons" src="https://image.flaticon.com/icons/svg/3176/3176330.svg" alt=""> Follow your interest</li>
-                <li><img src="https://image.flaticon.com/icons/svg/615/615075.svg" alt="" class="icons">Hear what people are talking about</li>
-                <li><img src="https://image.flaticon.com/icons/svg/3094/3094824.svg" alt="" class="icons">Join the conversation</li>
-            </ul>
-        </div>
-    </div>
     <div class="user-bg">
         <div class="container">
             <img src="https://image.flaticon.com/icons/svg/733/733579.svg" class="twitter" alt="">
@@ -56,13 +46,19 @@
                             {{form2.login(class='login_btn')}}
                         </form>
                     </div>
-                    <!--<div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>-->
                 </div>
                 
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="image-bg">
+        <div class="about">
+            <ul>
+                <li><img class="icons" src="https://image.flaticon.com/icons/svg/3176/3176330.svg" alt="">Interact with others</li>
+                <li><img src="https://image.flaticon.com/icons/svg/615/615075.svg" alt="" class="icons">Meet new people and receive news</li>
+                <li><img src="https://image.flaticon.com/icons/svg/3094/3094824.svg" alt="" class="icons">Save your favorite tweets</li>
+            </ul>
         </div>
     </div>
 </body>
