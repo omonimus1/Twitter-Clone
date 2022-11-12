@@ -16,10 +16,12 @@ Made using the python framework Flask, this is a frontend + backend clone of twi
 4. Run application ```python3 run.py```
 
 
+
 ### Test coding quality
 * Lint: ```pylint $(git ls-files '*.py')```
+* Lint configuration file ```pylint --generate-rcfile > .pylintrc```
 * Sort all imports ```isort .``` after have installed isort via ```pip3 install isort```
-```
+* Format code by using autopep8 ``` autopep8 --in-place --aggressive --aggressive $(git ls-files '*.py')```
 
 ## Screenshots
 
