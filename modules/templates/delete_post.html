@@ -55,7 +55,7 @@
                             <img src="{{ url_for('static', filename='Images/Users/profile_pics/' + retweet.ori_post.author.image_file) }}" style="width:50px; height: 50px; border-radius: 50%; margin-right: 10px; margin-top: 20px;" alt="">
                             <div>
                                 <div style="display: flex;">
-                                    <h3 style="margin-bottom: 0px;"><a class="username" href="{{ url_for('viewProfile',account_id=retweet.ori_post.author.id) }}"> @{{ retweet.ori_post.author.username }}</a></h3>
+                                    <h3 style="margin-bottom: 0px;"><a class="username" href="{{ url_for('view_profile',account_id=retweet.ori_post.author.id) }}"> @{{ retweet.ori_post.author.username }}</a></h3>
                                 </div>
                                 <p style="font-size: 12px;"><span style="font-weight: bold; color: dodgerblue;">Posted on </span>{{ retweet.ori_post.stamp }}}</p>
                             </div>

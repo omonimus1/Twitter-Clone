@@ -4,7 +4,6 @@ from flask import abort, flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_required, login_user, logout_user
 from werkzeug.security import check_password_hash, generate_password_hash
 
-# from sqlalchemy import desc
 from modules import app, db
 from modules.forms import Login, Signup, UpdateProfile, createTweet
 from modules.functions import (delete_old_images, save_bg_picture,
@@ -88,11 +87,11 @@ def account():
     page = request.args.get('page', 1, type=int)
     all_posts = Post.query\
         .filter_by(user_id=current_user.id)\
-        .order_by(desc(Post.id))\
+        .order_by(Post.id)\
         .paginate(page=page, per_page=5)
     retweets = Retweet.query\
         .filter_by(user_id=current_user.id)\
-        .order_by(desc(Retweet.id))
+        .order_by(Retweet.id)
 
     return render_template(
         'account.html',
@@ -103,9 +102,9 @@ def account():
         retweets=retweets)
 
 
-@app.route('/UpdateInfo', methods=['GET', 'POST'])
+@app.route('/update_info', methods=['GET', 'POST'])
 @login_required
-def updateInfo():
+def update_info():
     if request.method == 'POST':
         update = UpdateProfile()
         if update.validate_on_submit():
@@ -212,7 +211,7 @@ def dashboard():
 
     page = request.args.get('page', 1, type=int)
     timeline = Timeline.query\
-        .order_by(desc(Timeline.id))\
+        .order_by(Timeline.id)\
         .paginate(page=page, per_page=5)
     return render_template(
         'dashboard.html',
@@ -223,7 +222,7 @@ def dashboard():
 
 @app.route('/view_profile/<int:account_id>', methods=['GET', 'POST'])
 @login_required
-def viewProfile(account_id):
+def view_profile(account_id):
     if account_id == current_user.id:
         return redirect(url_for('account'))
 
@@ -240,11 +239,11 @@ def viewProfile(account_id):
     page = request.args.get('page', 1, type=int)
     all_posts = Post.query\
         .filter_by(user_id=get_user.id)\
-        .order_by(desc(Post.id))\
+        .order_by(Post.id)\
         .paginate(page=page, per_page=5)
     retweets = Retweet.query\
         .filter_by(user_id=get_user.id)\
-        .order_by(desc(Retweet.id))
+        .order_by(Retweet.id)
 
     return render_template(
         'view_profile.html',
@@ -279,7 +278,7 @@ def unsave_post(post_id):
 def bookmarks():
     posts = Bookmark.query\
         .filter_by(user_id=current_user.id)\
-        .order_by(desc(Bookmark.id))
+        .order_by(Bookmark.id)
     empty = False
     if posts is None:
         empty = True
