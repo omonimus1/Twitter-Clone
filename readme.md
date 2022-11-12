@@ -8,6 +8,7 @@ Made using the python framework Flask, this is a frontend + backend clone of twi
 4. Retweeting other perople's tweets.
 5. Looking up other users profile.
 
+\[![Pylint](https://github.com/omonimus1/Twitter-Clone/actions/workflows/pylint.yml/badge.svg?branch=master)](https://github.com/omonimus1/Twitter-Clone/actions/workflows/pylint.yml)
 
 ### Getting started 
 1. Create virtual environment ```python3 -m venv venv```
