@@ -31,5 +31,5 @@ jobs:
         pip install pytest-cov
         pytest
         pytest --cov=./ --cov-report=xml
-        codecov -t ${{ secrets.CODECOV_TOKEN }
+        codecov -t ${{ secrets.CODECOV_TOKEN }}
  
