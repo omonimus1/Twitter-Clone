@@ -27,6 +27,7 @@ jobs:
 
     - name: Run test, Generate coverage report and upload coverage
       run: |
+        pip install requirements.txt
         pip install pytest
         pip install pytest-cov
         pytest
