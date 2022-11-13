@@ -1,6 +1,9 @@
-name: Pylint and testing coverage
-
-on: [push]
+name: Pylint, testing and testing coverage
+on:
+  push:
+    branches: [ development, main, master, staging ]
+  pull_request:
+    branches: [ development, main, master, staging ]
 
 jobs:
   build:
@@ -22,15 +25,11 @@ jobs:
       run: |
         pylint $(git ls-files '*.py')
 
-    - name: Generate coverage report
+    - name: Run test, Generate coverage report and upload coverage
       run: |
         pip install pytest
         pip install pytest-cov
+        pytest
         pytest --cov=./ --cov-report=xml
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v3
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
-        directory: ./
-        name: codecov-umbrella
-        verbose: true
+        codecov -t ${{ secrets.CODECOV_TOKEN }
+ 

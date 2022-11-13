@@ -9,6 +9,8 @@ Made using the python framework Flask, this is a frontend + backend clone of twi
 5. Looking up other users profile.
 
 ![Pylint](https://github.com/omonimus1/Twitter-Clone/actions/workflows/pylint.yml/badge.svg?branch=master)
+[![codecov](https://codecov.io/gh/omonimus1/Twitter-Clone/branch/master/graph/badge.svg?token=9IkCuytt5r)](https://codecov.io/gh/omonimus1/Twitter-Clone)
+
 ### Getting started 
 1. Create virtual environment ```python3 -m venv venv```
 2. Activate venv ```source venv/bin/activate```
@@ -22,6 +24,7 @@ Made using the python framework Flask, this is a frontend + backend clone of twi
 * Lint configuration file ```pylint --generate-rcfile > .pylintrc```
 * Sort all imports ```isort .``` after have installed isort via ```pip3 install isort```
 * Format code by using autopep8 ``` autopep8 --in-place --aggressive --aggressive $(git ls-files '*.py')```
+* To test all the implemented unit tests: ```pytest``
 
 ## Screenshots
 
